@@ -2,19 +2,36 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
     /**
-     * @Route("/post", name="post")
+     * @Route("/sendtweet", name="sendtweet")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('post/index.html.twig', [
-            'controller_name' => 'PostController',
+        $post = new Post();
+
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $post = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
+        }
+
+        return $this->render('post/sendTweet.html.twig', [
+            'formPost' => $form->createView(),
         ]);
     }
 }
