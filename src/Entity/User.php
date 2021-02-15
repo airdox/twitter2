@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +37,40 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $posts;
+
+    /**
+     * @ORM\OneToOne(targetEntity=ReTweet::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReTweet::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $reTweets;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="subscribers")
+     */
+    private $subscribe;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="subscribe")
+     */
+    private $subscribers;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+        $this->reTweets = new ArrayCollection();
+        $this->subscribes = new ArrayCollection();
+        $this->subscribe = new ArrayCollection();
+        $this->subscribers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,5 +148,116 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReTweet[]
+     */
+    public function getReTweets(): Collection
+    {
+        return $this->reTweets;
+    }
+
+    public function addReTweet(ReTweet $reTweet): self
+    {
+        if (!$this->reTweets->contains($reTweet)) {
+            $this->reTweets[] = $reTweet;
+            $reTweet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReTweet(ReTweet $reTweet): self
+    {
+        if ($this->reTweets->removeElement($reTweet)) {
+            // set the owning side to null (unless already changed)
+            if ($reTweet->getUser() === $this) {
+                $reTweet->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getSubscribe(): Collection
+    {
+        return $this->subscribe;
+    }
+
+    public function addSubscribe(self $subscribe): self
+    {
+        if (!$this->subscribe->contains($subscribe)) {
+            $this->subscribe[] = $subscribe;
+        }
+
+        return $this;
+    }
+
+    public function removeSubscribe(self $subscribe): self
+    {
+        $this->subscribe->removeElement($subscribe);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getSubscribers(): Collection
+    {
+        return $this->subscribers;
+    }
+
+    public function addSubscriber(self $subscriber): self
+    {
+        if (!$this->subscribers->contains($subscriber)) {
+            $this->subscribers[] = $subscriber;
+            $subscriber->addSubscribe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriber(self $subscriber): self
+    {
+        if ($this->subscribers->removeElement($subscriber)) {
+            $subscriber->removeSubscribe($this);
+        }
+
+        return $this;
     }
 }

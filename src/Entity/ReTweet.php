@@ -18,40 +18,42 @@ class ReTweet
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="reTweets")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_user;
+    private $post;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reTweets")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_post;
+    private $user;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdUser(): ?int
+    public function getPost(): ?Post
     {
-        return $this->id_user;
+        return $this->post;
     }
 
-    public function setIdUser(int $id_user): self
+    public function setPost(?Post $post): self
     {
-        $this->id_user = $id_user;
+        $this->post = $post;
 
         return $this;
     }
 
-    public function getIdPost(): ?int
+    public function getUser(): ?User
     {
-        return $this->id_post;
+        return $this->user;
     }
 
-    public function setIdPost(int $id_post): self
+    public function setUser(?User $user): self
     {
-        $this->id_post = $id_post;
+        $this->user = $user;
 
         return $this;
     }
