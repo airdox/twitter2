@@ -20,7 +20,7 @@ class Post
     /**
      * @ORM\Column(type="integer")
      */
-    private $user_id;
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -34,12 +34,12 @@ class Post
 
     public function getUserId(): ?int
     {
-        return $this->user_id;
+        return $this->title;
     }
 
-    public function setUserId(int $user_id): self
+    public function setUserId(int $title): self
     {
-        $this->user_id = $user_id;
+        $this->title = $title;
 
         return $this;
     }
