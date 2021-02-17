@@ -16,5 +16,10 @@
     {% endfor %}
 </ul>
 
-<button>Filter</button>
+<button onclick="filter()" class="filter-button">Filter</button>
+
+<div class="example-wrapper">
+        {{form(formPost)}}
+    
+</div>
 {% endblock %}
