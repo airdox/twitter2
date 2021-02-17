@@ -8,11 +8,6 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-        {{form(formPost)}}
-    
-</div>
-
 <ul class="fluxAll active">
     {% for tweet in tweetsAll %}
         <li>{{ tweet.name }} : {{ tweet.date }}</li>
@@ -24,4 +19,12 @@
         <li>{{ tweet.name }} : {{ tweet.date }}</li>
     {% endfor %}
 </ul>
+
+<button onclick="filter()" class="filter-button">Filter</button>
+
+<div class="example-wrapper">
+        {{form(formPost)}}
+    
+</div>
+
 {% endblock %}

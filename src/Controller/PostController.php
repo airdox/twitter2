@@ -56,8 +56,8 @@ class PostController extends AbstractController
             ]
         ];
 
-        return $this->render('post/sendTweet.html.twig', [
-            'formPost' => $form->createView(),
+        return $this->render('post/index.html.twig', [
+            'controller_name' => 'PostController',
             'tweetsAll' => $tweetsAll,
             'tweetsFilter' => $tweetsFilter
         ]);

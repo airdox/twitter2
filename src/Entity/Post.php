@@ -45,12 +45,12 @@ class Post
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getcontent(): ?string
     {
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setcontent(string $content): self
     {
         $this->content = $content;
 
