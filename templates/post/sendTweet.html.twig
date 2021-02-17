@@ -12,4 +12,16 @@
         {{form(formPost)}}
     
 </div>
+
+<ul class="fluxAll active">
+    {% for tweet in tweetsAll %}
+        <li>{{ tweet.name }} : {{ tweet.date }}</li>
+    {% endfor %}
+</ul>
+
+<ul class="fluxFilter">
+    {% for tweet in tweetsFilter %}
+        <li>{{ tweet.name }} : {{ tweet.date }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

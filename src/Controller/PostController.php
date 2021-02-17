@@ -22,16 +22,44 @@ class PostController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $post = $form->getData();
+            $post->setUser($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
         }
 
+        $tweetsAll = [
+            [
+                "name" => "nameTweet",
+                "date" => "Lundi 10 Janvier 2021"
+            ],
+            [
+                "name" => "nameTweet2",
+                "date" => "Mardi 11 Janvier 2021"
+            ],
+            [
+                "name" => "nameTweet3",
+                "date" => "Mercredi 12 Janvier 2021"
+            ]
+        ];
+
+        $tweetsFilter = [
+            [
+                "name" => "nameTweet",
+                "date" => "Lundi 10 Janvier 2021"
+            ],
+            [
+                "name" => "nameTweet2",
+                "date" => "Mardi 11 Janvier 2021"
+            ]
+        ];
+
         return $this->render('post/sendTweet.html.twig', [
             'formPost' => $form->createView(),
+            'tweetsAll' => $tweetsAll,
+            'tweetsFilter' => $tweetsFilter
         ]);
     }
 }
