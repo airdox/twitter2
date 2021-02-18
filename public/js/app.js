@@ -1,6 +1,7 @@
 function filter(){
-  let fluxAll = document.body.getElementsByClassName("fluxAll")[0];
-  let fluxFilter = document.body.getElementsByClassName("fluxFilter")[0];
-  fluxAll.classList.toggle("active");
-  fluxFilter.classList.toggle("active");
+  let tweets = document.body.getElementsByClassName("flux")[0].getElementsByTagName("li");
+  console.log(tweets)
+  for (let i=0, max=tweets.length; i < max; i++) {
+    console.log(tweets[i].innerHTML);
+  };
 }

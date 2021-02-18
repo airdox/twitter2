@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
+use App\Controller\PostController as PostController;
 
 class ReTweetController extends AbstractController
 {
@@ -24,9 +25,9 @@ class ReTweetController extends AbstractController
         $entityManager->persist($retweet);
         $entityManager->flush();
 
-        // return $this->redirectToRoute('homepage');
-        return $this->render('retweet/index.html.twig', [
-            'controller_name' => 'ReTweetController',
-        ]);
+        return $this->redirectToRoute('sendtweet');
+        // return $this->render('retweet/index.html.twig', [
+        //     'controller_name' => 'ReTweetController',
+        // ]);
     }
 }

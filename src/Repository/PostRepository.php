@@ -36,6 +36,14 @@ class PostRepository extends ServiceEntityRepository
     }
     */
 
+    // public function listTweet(){
+    //     return $this->createQueryBuilder('tweet')
+    //         ->select('tweet.content')
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
     /*
     public function findOneBySomeField($value): ?Post
     {

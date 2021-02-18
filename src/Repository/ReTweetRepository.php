@@ -36,6 +36,10 @@ class ReTweetRepository extends ServiceEntityRepository
     }
     */
 
+    // public function findReTweets(){
+
+    // }
+
     /*
     public function findOneBySomeField($value): ?ReTweet
     {
