@@ -4,17 +4,39 @@
 
 {% block body %}
 
-<ul class="fluxAll active">
-    {% for tweet in tweetsAll %}
-        <li>{{ tweet.name }} : {{ tweet.date }}</li>
+<ul class="flux">
+    {% for tweet in tweets %}
+        <form action="{{ path('retweet', {id: tweet.id}) }}" method="get">
+            <li class="tweetId_{{tweet.id}}">
+            <p>{{ tweet.content }}</p>
+            {% if true %}
+                <input type="submit" value="Retweet" />
+            {% else %}
+                <input type="submit" value="UnRetweet" />
+            {% endif %}
+            </li>
+        </form>
     {% endfor %}
 </ul>
 
-<ul class="fluxFilter">
-    {% for tweet in tweetsFilter %}
-        <li>{{ tweet.name }} : {{ tweet.date }}</li>
+<ul class="users">
+    {% for user in users %}
+        <form action="{{ path('subscribe', {id: user.id}) }}" method="get">
+            <li class="userId_{{user.id}}">
+                <p>{{user.email}}</p>
+                {% if true %}
+                    <input type="submit" value="Follow" />
+                {% else %}
+                    <input type="submit" value="UnFollow" />
+                {% endif %}
+            </li>
+        </form>
     {% endfor %}
 </ul>
 
-<button>Filter</button>
+<button onclick="filter()" class="filter-button">Filter</button>
+
+<div class="example-wrapper">
+        {{form(formPost)}}
+</div>
 {% endblock %}

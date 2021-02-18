@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +17,7 @@ class PostController extends AbstractController
     /**
      * @Route("/sendtweet", name="sendtweet")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, PostRepository $postRepository, UserRepository $userRepository, AuthenticationUtils $authenticationUtils): Response
     {
         $post = new Post();
 
@@ -56,10 +59,14 @@ class PostController extends AbstractController
             ]
         ];
 
+        // dd($authenticationUtils->getLastUsername());
+
         return $this->render('post/index.html.twig', [
-            'controller_name' => 'PostController',
-            'tweetsAll' => $tweetsAll,
-            'tweetsFilter' => $tweetsFilter
+            'formPost' => $form->createView(),
+            'tweets' => $postRepository->findAll(),
+            'retweets' => ['tweet1', 'tweet2'],
+            'users' => $userRepository->findAll(),
+            'follows' => ['user1', 'user2']
         ]);
     }
 }

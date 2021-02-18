@@ -32,9 +32,9 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        // return $this->redirectToRoute('homepage');
-        return $this->render('retweet/index.html.twig', [
-            'controller_name' => 'ReTweetController',
-        ]);
+        return $this->redirectToRoute('sendtweet');
+        // return $this->render('retweet/index.html.twig', [
+        //     'controller_name' => 'ReTweetController',
+        // ]);
     }
 }
