@@ -25,8 +25,8 @@ class UserController extends AbstractController
      */
     public function subcribe(Request $request, User $user): Response
     {
-       $currentUser = $this->getUser();
-       $currentUser->addSubscribe($user);
+        $currentUser = $this->getUser();
+        $currentUser->addSubscribe($user);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);

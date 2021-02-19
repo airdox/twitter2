@@ -6,31 +6,31 @@
 
 <ul class="flux">
     {% for tweet in tweets %}
-        <form action="{{ path('retweet', {id: tweet.id}) }}" method="get">
-            <li class="tweetId_{{tweet.id}}">
-            <p>{{ tweet.content }}</p>
-            {% if true %}
-                <input type="submit" value="Retweet" />
-            {% else %}
-                <input type="submit" value="UnRetweet" />
-            {% endif %}
-            </li>
-        </form>
+        <li class="tweetId_{{tweet.id}} {% if tweet.is_rt is not null %}retweet{% endif %}">
+            <form action="{{ path('retweet', {id: tweet.id}) }}" method="get">
+                <p>{{ tweet.content }}</p>
+                {% if tweet.is_rt is null %}
+                    <input type="submit" value="Retweet" />
+                {% else %}
+                    <input type="submit" value="UnRetweet" />
+                {% endif %}
+            </form>
+        </li>
     {% endfor %}
 </ul>
 
 <ul class="users">
     {% for user in users %}
-        <form action="{{ path('subscribe', {id: user.id}) }}" method="get">
-            <li class="userId_{{user.id}}">
+        <li class="userId_{{user.id}}">
+            <form action="{{ path('subscribe', {id: user.id}) }}" method="get">
                 <p>{{user.email}}</p>
                 {% if true %}
                     <input type="submit" value="Follow" />
                 {% else %}
                     <input type="submit" value="UnFollow" />
                 {% endif %}
-            </li>
-        </form>
+            </form>
+        </li>
     {% endfor %}
 </ul>
 

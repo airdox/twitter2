@@ -33,37 +33,11 @@ class PostController extends AbstractController
             $entityManager->flush();
         }
 
-        $tweetsAll = [
-            [
-                "name" => "nameTweet",
-                "date" => "Lundi 10 Janvier 2021"
-            ],
-            [
-                "name" => "nameTweet2",
-                "date" => "Mardi 11 Janvier 2021"
-            ],
-            [
-                "name" => "nameTweet3",
-                "date" => "Mercredi 12 Janvier 2021"
-            ]
-        ];
-
-        $tweetsFilter = [
-            [
-                "name" => "nameTweet",
-                "date" => "Lundi 10 Janvier 2021"
-            ],
-            [
-                "name" => "nameTweet2",
-                "date" => "Mardi 11 Janvier 2021"
-            ]
-        ];
-
-        // dd($authenticationUtils->getLastUsername());
+        // dd($postRepository->listTweet());
 
         return $this->render('post/index.html.twig', [
             'formPost' => $form->createView(),
-            'tweets' => $postRepository->findAll(),
+            'tweets' => $postRepository->listTweet(),
             'retweets' => ['tweet1', 'tweet2'],
             'users' => $userRepository->findAll(),
             'follows' => ['user1', 'user2']

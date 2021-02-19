@@ -10,3 +10,10 @@ body{
 .fluxAll.active, .fluxFilter.active{
     display: block;
 }
+.flux li form, .users li form {
+    display: flex;
+    align-items: center;
+}
+.flux li form p, .users li form p {
+    margin-right: 20px;
+}

@@ -1,7 +1,16 @@
+var toggle = false;
 function filter(){
+  toggle = !toggle;
+
   let tweets = document.body.getElementsByClassName("flux")[0].getElementsByTagName("li");
-  console.log(tweets)
+  
   for (let i=0, max=tweets.length; i < max; i++) {
-    console.log(tweets[i].innerHTML);
+    if(!tweets[i].classList.contains('retweet')) {
+      if(toggle === true) {
+        tweets[i].style.display = 'none';
+      } else {
+        tweets[i].style.display = 'block';
+      }
+    }
   };
 }
