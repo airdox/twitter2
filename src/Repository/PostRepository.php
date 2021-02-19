@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\ReTweet;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,13 +38,15 @@ class PostRepository extends ServiceEntityRepository
     }
     */
 
-    // public function listTweet(){
-    //     return $this->createQueryBuilder('tweet')
-    //         ->select('tweet.content')
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
+    public function listTweet(){
+        return $this->createQueryBuilder('tweet')
+            ->select('tweet.content', 'tweet.id', 'rt.id as is_rt')
+            ->leftJoin(ReTweet::class, 'rt', 'WITH', 'tweet.id = rt.post')
+            // ->leftJoin()
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Post
